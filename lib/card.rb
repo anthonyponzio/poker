@@ -14,4 +14,8 @@ class Card
     when 14 then 'A'
     end
   end
+
+  def to_s
+    "#{face}#{suit}"
+  end
 end

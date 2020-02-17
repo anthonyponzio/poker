@@ -23,4 +23,22 @@ describe Card do
       expect(card_2.face).to eq('K')
     end
   end
+
+  context '#to_s' do
+    card_1 = Card.new(12, :H)
+    card_2 = Card.new(5, :C)
+    
+    it 'should call #face' do
+      expect(card_1).to receive(:face)
+      card_1.to_s
+
+      expect(card_2).to receive(:face)
+      card_2.to_s
+    end
+
+    it 'should return card face and suit in string' do
+      expect(card_1.to_s).to eq('QH')
+      expect(card_2.to_s).to eq('5C')
+    end
+  end
 end
