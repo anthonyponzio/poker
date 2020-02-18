@@ -1,4 +1,16 @@
 class Hand
+  HAND_SCORES = {
+    straight_flush: 8,
+    four_of_a_kind: 7,
+    full_house: 6,
+    flush: 5,
+    straight: 4,
+    three_of_a_kind: 3,
+    two_pair: 2,
+    one_pair: 1,
+    high_card: 0,
+  }
+
   attr_reader :cards
 
   def initialize(cards)
@@ -6,20 +18,20 @@ class Hand
   end
 
   def detect_hand
-    return 'straight flush' if straight? && flush?
+    return :straight_flush if straight? && flush?
 
-    count = Hash.new(0)
-    cards.each { |card| count[card.value] += 1 }
-    values = count.values.sort
+    values_count = Hash.new(0)
+    cards.each { |card| values_count[card.value] += 1 }
+    count = values_count.values.sort
   
-    case values.last
-    when 4 then 'four of a kind'
-    when 3 then values[-2] == 2 ? 'full house' : 'three of a kind'
-    when 2 then values[-2] == 2 ? 'two pair' : 'one pair'
+    case count.last
+    when 4 then :four_of_a_kind
+    when 3 then count[-2] == 2 ? :full_house : :three_of_a_kind
+    when 2 then count[-2] == 2 ? :two_pair : :one_pair
     else
-      return 'flush' if flush?
-      return 'straight' if straight?
-      'high card'
+      return :flush if flush?
+      return :straight if straight?
+      :high_card
     end
   end
 
