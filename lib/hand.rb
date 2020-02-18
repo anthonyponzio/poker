@@ -1,5 +1,4 @@
 class Hand
-
   attr_reader :cards
 
   def initialize(cards)
@@ -10,8 +9,6 @@ class Hand
     return 'straight flush' if straight? && flush?
 
     count = Hash.new(0)
-
-    
     cards.each { |card| count[card.value] += 1 }
     values = count.values.sort
 
@@ -30,6 +27,7 @@ class Hand
     end
   end
 
+  private
   def flush?
     cards.all? { |card| cards[0].suit == card.suit }
   end
