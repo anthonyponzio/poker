@@ -8,19 +8,19 @@ describe Card do
       expect(card_1.value).to eq(2)
       expect(card_1.suit).to eq(:D)
 
-      card_2 = Card.new(14, :C)
-      expect(card_2.value).to eq(14)
+      card_2 = Card.new(10, :C)
+      expect(card_2.value).to eq(10)
       expect(card_2.suit).to eq(:C)
     end
   end
 
   context '#face' do
     it 'should return the face string for the cards value' do
-      card_1 = Card.new(14, :S)
-      expect(card_1.face).to eq('A')
+      card_1 = Card.new(13, :S)
+      expect(card_1.face).to eq('K')
       
-      card_2 = Card.new(13, :C)
-      expect(card_2.face).to eq('K')
+      card_2 = Card.new(1, :C)
+      expect(card_2.face).to eq('A')
     end
   end
 
