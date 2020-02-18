@@ -20,14 +20,12 @@ class Hand
   def detect_hand
     return :straight_flush if straight? && flush?
 
-    values_count = Hash.new(0)
-    cards.each { |card| values_count[card.value] += 1 }
-    count = values_count.values.sort
+    sorted_values = values_count.values.sort
   
-    case count.last
+    case sorted_values.last
     when 4 then :four_of_a_kind
-    when 3 then count[-2] == 2 ? :full_house : :three_of_a_kind
-    when 2 then count[-2] == 2 ? :two_pair : :one_pair
+    when 3 then sorted_values[-2] == 2 ? :full_house : :three_of_a_kind
+    when 2 then sorted_values[-2] == 2 ? :two_pair : :one_pair
     else
       return :flush if flush?
       return :straight if straight?
@@ -35,7 +33,22 @@ class Hand
     end
   end
 
+  protected
+  def details
+    {
+      score: HAND_SCORES[detect_hand],
+      ranked_values: values_count.sort_by { |key, value| [value, key] },
+    }
+  end
+
   private
+  
+  def values_count
+    count = Hash.new(0)
+    cards.each { |card| count[card.value] += 1 }
+    count
+  end
+
   def flush?
     cards.all? { |card| cards[0].suit == card.suit }
   end
