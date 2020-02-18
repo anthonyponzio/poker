@@ -41,6 +41,17 @@ class Hand
 
   protected
 
+  def score
+    HAND_SCORES[detect_hand]
+  end
+
+  def ranked_values
+    sorted_values_count = values_count.sort_by { |card_value, count| [count, card_value] }
+    sorted_values_count.map { |(card_value, count)| card_value }.reverse
+  end
+
+  private
+  
   def detect_hand
     return :straight_flush if straight? && flush?
 
@@ -56,17 +67,6 @@ class Hand
       :high_card
     end
   end
-
-  def score
-    HAND_SCORES[detect_hand]
-  end
-
-  def ranked_values
-    sorted_values_count = values_count.sort_by { |card_value, count| [count, card_value] }
-    sorted_values_count.map { |(card_value, count)| card_value }.reverse
-  end
-
-  private
   
   def values_count
     count = Hash.new(0)
