@@ -28,9 +28,11 @@ describe Deck do
     end
 
     it 'should mutate the deck' do
-      l_before_draw = deck.cards.length
-      deck.draw_card
-      expect(deck.cards.length).to not_eq(l_before_draw)
+      length_before_draw = deck.cards.length
+      drawn_card = deck.draw_card
+      
+      expect(deck.cards.length).to not_eq(length_before_draw)
+      expect(deck.cards.last).to not_be(drawn_card)
     end
   end
 end
