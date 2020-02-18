@@ -2,32 +2,12 @@ require 'rspec'
 require 'hand'
 require 'card'
 
-describe Hand do
-  
-  
-  
-  
+describe Hand do  
   context '#initialize' do
     cards = [Card.new(1, :D), Card.new(2, :D), Card.new(3, :D), Card.new(4, :D), Card.new(5, :D)]
     hand = Hand.new(cards)
     it 'should take array of 5 cards and set it to @cards' do
       expect(hand.cards.length).to eq(5)
-    end
-  end
-
-  context '#flush?' do
-    it 'should return true when hand is flush' do
-      cards = [Card.new(2, :D), Card.new(3, :D), Card.new(7, :D), Card.new(9, :D), Card.new(11, :D)]
-      hand = Hand.new(cards)
-
-      expect(hand.flush?).to be true      
-    end
-
-    it 'should return false when hand is not flush' do
-      cards = [Card.new(2, :H), Card.new(3, :D), Card.new(7, :C), Card.new(9, :C), Card.new(11, :D)]
-      hand = Hand.new(cards)
-    
-      expect(hand.flush?).to be false
     end
   end
 
