@@ -70,7 +70,7 @@ describe Hand do
   }
 
   context '#initialize' do
-    hand = Hand.new(card_sets[:straight_flush])
+    hand = Hand.new(card_sets[:straight_flush].dup)
     
     it 'should take array of 5 cards and set it to @cards' do
       expect(hand.cards.length).to eq(5)
@@ -78,23 +78,23 @@ describe Hand do
   end
 
   context "#beats?" do
-    subject(:full_house) { Hand.new(card_sets[:full_house]) }
+    subject(:full_house) { Hand.new(card_sets[:full_house].dup) }
 
     it 'should raise error if argument is not a Hand instance' do
       expect { full_house.beats?("toaster") }.to raise_error(ArgumentError)
     end
 
     it 'should return true if hand beats other hand' do
-      two_pair = Hand.new(card_sets[:two_pair])
-      flush = Hand.new(card_sets[:flush])
+      two_pair = Hand.new(card_sets[:two_pair].dup)
+      flush = Hand.new(card_sets[:flush].dup)
       
       expect(full_house.beats?(two_pair)).to be true
       expect(full_house.beats?(flush)).to be true
     end
 
     it 'should return false if hand does not beat other hand' do
-      four_of_a_kind = Hand.new(card_sets[:four_of_a_kind])
-      straight_flush = Hand.new(card_sets[:straight_flush])
+      four_of_a_kind = Hand.new(card_sets[:four_of_a_kind].dup)
+      straight_flush = Hand.new(card_sets[:straight_flush].dup)
 
       expect(full_house.beats?(four_of_a_kind)).to be false
       expect(full_house.beats?(straight_flush)).to be false
@@ -102,7 +102,7 @@ describe Hand do
   end
 
   context '#discard_cards' do
-    subject(:hand) { Hand.new(card_sets[:two_pair])}
+    subject(:hand) { Hand.new(card_sets[:two_pair].dup)}
   
     it 'should raise error when given invalid index' do
       expect { hand.discard_cards([10]) }.to raise_error(ArgumentError)
@@ -128,5 +128,33 @@ describe Hand do
     end
   end
 
-  context 
+  context '#add_cards' do
+    subject(:hand) { Hand.new(card_sets[:two_pair].dup)}
+
+    it 'should raise error when result in more than 5 cards in hand' do
+      expect { hand.add_cards([Card.new(7, :D)]) }.to raise_error(ArgumentError)
+    end
+
+    it 'should add given card to hand' do
+      hand.discard_cards([0])
+      
+      card = Card.new(7, :D)
+      hand.add_cards([card])
+
+      expect(hand.cards).to include(card)        
+    end
+
+    it 'should add multiple cards to hand' do
+      hand.discard_cards([0, 1])
+
+      card_1 = Card.new(7, :D)
+      card_2 = Card.new(11, :C)
+
+      hand.add_cards([card_1, card_2])
+
+      expect(hand.cards).to include(card_1)
+      expect(hand.cards).to include(card_2)
+    end
+
+  end
 end
