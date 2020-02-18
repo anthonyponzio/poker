@@ -11,18 +11,14 @@ class Hand
     count = Hash.new(0)
     cards.each { |card| count[card.value] += 1 }
     values = count.values.sort
-
-    if values[-1] == 4
-      'four of a kind'
-    elsif values[-1] == 3
-      values[-2] == 2 ? 'full house' : 'three of a kind'
-    elsif flush?
-      'flush'
-    elsif straight?
-      'straight'
-    elsif values[-1] == 2
-      values[-2] == 2 ? 'two pair' : 'one pair'
+  
+    case values.last
+    when 4 then 'four of a kind'
+    when 3 then values[-2] == 2 ? 'full house' : 'three of a kind'
+    when 2 then values[-2] == 2 ? 'two pair' : 'one pair'
     else
+      return 'flush' if flush?
+      return 'straight' if straight?
       'high card'
     end
   end
