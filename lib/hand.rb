@@ -33,12 +33,36 @@ class Hand
     end
   end
 
+  def beats?(other_hand)
+    unless other_hand.is_a?(Hand)
+      raise ArgumentError.new('argument must be instance of Hand')
+    end
+
+    case score <=> other_hand.score
+    when -1 then return false # our score is less than other hand score
+    when 1 then return true   # our score is greater than other hand score
+    else                      # our score is the same as other hand score, compare ranked values
+      other_hand_ranked_values = other_hand.ranked_values
+      
+      ranked_values.each_with_index do |value, i|
+        case value <=> other_hand_ranked_values[i]
+        when -1 then return false
+        when 1 then return true
+        end
+      end
+      
+      false # our hand doesn't beat other_hand
+    end
+  end
+
   protected
-  def details
-    {
-      score: HAND_SCORES[detect_hand],
-      ranked_values: values_count.sort_by { |key, value| [value, key] },
-    }
+  def score
+    HAND_SCORES[detect_hand]
+  end
+
+  def ranked_values
+    sorted_values_count = values_count.sort_by { |card_value, count| [count, card_value] }
+    sorted_values_count.map { |(card_value, count)| card_value }.reverse
   end
 
   private
