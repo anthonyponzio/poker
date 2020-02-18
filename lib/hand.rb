@@ -39,6 +39,14 @@ class Hand
     end
   end
 
+  def discard_cards(indices)
+    unless indices.all? { |idx| (0..4).include?(idx) }
+      raise ArgumentError.new('invalid index')
+    end
+
+    indices.sort.reverse.each { |idx| @cards.delete_at(idx) }
+  end
+
   protected
 
   def score

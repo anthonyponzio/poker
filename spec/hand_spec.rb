@@ -100,4 +100,33 @@ describe Hand do
       expect(full_house.beats?(straight_flush)).to be false
     end
   end
+
+  context '#discard_cards' do
+    subject(:hand) { Hand.new(card_sets[:two_pair])}
+  
+    it 'should raise error when given invalid index' do
+      expect { hand.discard_cards([10]) }.to raise_error(ArgumentError)
+      expect { hand.discard_cards([-1]) }.to raise_error(ArgumentError)
+    end
+
+    it 'should remove card at given index in hand' do
+      card = hand.cards[0]
+      hand.discard_cards([0])
+
+      expect(hand.cards).not_to include(card)
+    end
+
+    it 'should handle multiple indexes' do
+      card_1 = hand.cards[0]
+      card_2 = hand.cards[1]
+      card_3 = hand.cards[2]
+      hand.discard_cards([0, 2, 1])
+
+      expect(hand.cards).not_to include(card_1)
+      expect(hand.cards).not_to include(card_2)
+      expect(hand.cards).not_to include(card_3)
+    end
+  end
+
+  context 
 end
