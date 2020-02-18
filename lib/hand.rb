@@ -17,22 +17,6 @@ class Hand
     @cards = cards
   end
 
-  def detect_hand
-    return :straight_flush if straight? && flush?
-
-    sorted_values = values_count.values.sort
-  
-    case sorted_values.last
-    when 4 then :four_of_a_kind
-    when 3 then sorted_values[-2] == 2 ? :full_house : :three_of_a_kind
-    when 2 then sorted_values[-2] == 2 ? :two_pair : :one_pair
-    else
-      return :flush if flush?
-      return :straight if straight?
-      :high_card
-    end
-  end
-
   def beats?(other_hand)
     unless other_hand.is_a?(Hand)
       raise ArgumentError.new('argument must be instance of Hand')
@@ -56,6 +40,23 @@ class Hand
   end
 
   protected
+
+  def detect_hand
+    return :straight_flush if straight? && flush?
+
+    sorted_values = values_count.values.sort
+  
+    case sorted_values.last
+    when 4 then :four_of_a_kind
+    when 3 then sorted_values[-2] == 2 ? :full_house : :three_of_a_kind
+    when 2 then sorted_values[-2] == 2 ? :two_pair : :one_pair
+    else
+      return :flush if flush?
+      return :straight if straight?
+      :high_card
+    end
+  end
+
   def score
     HAND_SCORES[detect_hand]
   end
