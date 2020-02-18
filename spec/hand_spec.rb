@@ -77,62 +77,6 @@ describe Hand do
     end
   end
 
-  context '#detect_hand' do
-    it 'should detect straight flush' do
-      hand = Hand.new(card_sets[:straight_flush])
-
-      expect(hand.detect_hand).to eq(:straight_flush)
-    end
-
-    it 'should detect four of a kind' do
-      hand = Hand.new(card_sets[:four_of_a_kind])
-      
-      expect(hand.detect_hand).to eq(:four_of_a_kind)
-    end
-
-    it 'should detect full house' do
-      hand = Hand.new(card_sets[:full_house])
-
-      expect(hand.detect_hand).to eq(:full_house)
-    end
-
-    it 'should detect flush' do
-      hand = Hand.new(card_sets[:flush])
-
-      expect(hand.detect_hand).to eq(:flush)
-    end
-
-    it 'should detect straight' do
-      hand = Hand.new(card_sets[:straight])
-
-      expect(hand.detect_hand).to eq(:straight)
-    end
-
-    it 'should detect three of a kind' do
-      hand = Hand.new(card_sets[:three_of_a_kind])
-      
-      expect(hand.detect_hand).to eq(:three_of_a_kind)
-    end
-
-    it 'should detect two pair' do
-      hand = Hand.new(card_sets[:two_pair])
-      
-      expect(hand.detect_hand).to eq(:two_pair)
-    end
-
-    it 'should detect one pair' do
-      hand = Hand.new(card_sets[:one_pair])
-
-      expect(hand.detect_hand).to eq(:one_pair)
-    end
-
-    it 'should detect high card (no other hands)' do
-      hand = Hand.new(card_sets[:high_card])
-
-      expect(hand.detect_hand).to eq(:high_card)
-    end
-  end
-
   context "#beats?" do
     subject(:full_house) { Hand.new(card_sets[:full_house]) }
 
