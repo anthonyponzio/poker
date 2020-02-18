@@ -31,8 +31,8 @@ describe Deck do
       length_before_draw = deck.cards.length
       drawn_card = deck.draw_card
       
-      expect(deck.cards.length).to not_eq(length_before_draw)
-      expect(deck.cards.last).to not_be(drawn_card)
+      expect(deck.cards.length).not_to eq(length_before_draw)
+      expect(deck.cards.last).not_to be(drawn_card)
     end
   end
 end

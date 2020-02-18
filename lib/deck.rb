@@ -10,4 +10,8 @@ class Deck
       (1..13).map { |value| Card.new(value, suit) }
     end
   end
+
+  def draw_card
+    @cards.pop
+  end
 end
