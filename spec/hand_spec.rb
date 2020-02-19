@@ -155,6 +155,5 @@ describe Hand do
       expect(hand.cards).to include(card_1)
       expect(hand.cards).to include(card_2)
     end
-
   end
 end
